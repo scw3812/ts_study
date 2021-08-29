@@ -5,13 +5,17 @@ var Person12 = /** @class */ (function () {
     }
     return Person12;
 }());
-var person12 = new Person12('sdfs');
+new Person12('sdfs');
+var personGeneric = {
+    name: 'sdfsdf',
+    age: 12
+};
 function getProperty(person, key) {
     return person[key];
 }
-console.log(getProperty(person12, "name"));
+console.log(getProperty(personGeneric, "name"));
 function setProperty(person, key, value) {
     person[key] = value;
 }
-setProperty(person12, 'name', 'changwoo');
-console.log(getProperty(person12, "name"));
+setProperty(personGeneric, 'name', 'changwoo');
+console.log(getProperty(personGeneric, "name"));
