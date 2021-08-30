@@ -11,6 +11,12 @@ export default function Nav() {
         <li>
           <Link to="/about">About</Link>
         </li>
+        <li>
+          <Link to="/proptest">PropTest</Link>
+        </li>
+        <li>
+          <Link to="/proptestresult">PropTestResult</Link>
+        </li>
       </ul>
     </>
   );
