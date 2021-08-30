@@ -1,0 +1,24 @@
+{
+  "data": {
+    "students": [
+      {
+        "id": 0,
+        "name": "cho",
+        "age": 25,
+        "isGirlFriend": false
+      },
+      {
+        "id": 1,
+        "name": "kim",
+        "age": 24,
+        "isGirlFriend": true
+      },
+      {
+        "id": 2,
+        "name": "seo",
+        "age": 27,
+        "isGirlFriend": true
+      }
+    ]
+  }
+}

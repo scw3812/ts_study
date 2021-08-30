@@ -1,17 +1,17 @@
-interface PropTypes {
+interface PropsType {
   location: {
     state: {
       menu: {
-        name: string,
-        price: number
+        name: string;
+        price: number;
       };
     };
   };
 }
 
-export default function RouterPropTestResult({ location }: PropTypes) {
-  const name = location.state.menu.name;
-  const price = location.state.menu.price;
+export default function RouterPropTestResult({ location }: PropsType) {
+  const name = location.state ? location.state.menu.name : "";
+  const price = location.state ? location.state.menu.price : 0;
 
   return (
     <>
