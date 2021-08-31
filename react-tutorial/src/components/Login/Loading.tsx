@@ -1,8 +1,8 @@
-import "./Loading.css";
+import './Loading.css';
 
 export default function Loading() {
   return (
-    <>
+    <div className="loading">
       <h1>설레는 점심시간</h1>
       <div>
         <img
@@ -12,6 +12,6 @@ export default function Loading() {
         />
       </div>
       <h1>조교도시락</h1>
-    </>
+    </div>
   );
 }

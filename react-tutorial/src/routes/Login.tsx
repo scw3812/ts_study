@@ -1,14 +1,15 @@
+import { useState } from 'react';
 import Loading from '../components/Login/Loading';
 import LoginMain from '../components/Login/LoginMain';
-import Footer from '../components/Footer';
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  setTimeout(() => setIsLoading(false), 2000);
+
   return (
     <>
-      <h1>Login</h1>
-      <Loading />
-      <LoginMain />
-      <Footer />
+      { isLoading ? <Loading /> : <LoginMain /> }
     </>
   );
 }
