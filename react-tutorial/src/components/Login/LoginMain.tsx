@@ -4,14 +4,30 @@ import "./LoginMain.css";
 
 export default function LoginMain() {
   return (
-    <div className="loginMain">
+    <div className="loginMain fullsize">
       <section className="idAndPasswd">
-        <div className="id"></div>
-        <div className="passwd"></div>
+        <div className="form-floating mb-3 id">
+          <input
+            type="text"
+            className="form-control"
+            id="floatingInput"
+            placeholder="아이디"
+          />
+          <label htmlFor="floatingInput">아이디</label>
+        </div>
+        <div className="form-floating password">
+          <input
+            type="password"
+            className="form-control"
+            id="floatingPassword"
+            placeholder="비밀번호"
+          />
+          <label htmlFor="floatingPassword">비밀번호</label>
+        </div>
         <div className="buttonContainer">
           <div className="d-grid gap-2">
-            <button className="btn btn-info" type="button">
-              Button
+            <button className="loginButton btn btn-info" type="button">
+              로그인
             </button>
           </div>
         </div>
