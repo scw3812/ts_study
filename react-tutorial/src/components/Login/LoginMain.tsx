@@ -2,7 +2,21 @@ import { Link } from "react-router-dom";
 import Footer from "../Footer";
 import "./LoginMain.css";
 
-export default function LoginMain() {
+interface PropsType {
+  id: string;
+  passwd: string;
+  handleIdChange: (id: string) => void;
+  handlePwChange: (passwd: string) => void;
+  login: () => void;
+}
+
+export default function LoginMain({
+  id,
+  passwd,
+  handleIdChange,
+  handlePwChange,
+  login
+}: PropsType) {
   return (
     <div className="loginMain fullsize">
       <section className="idAndPasswd">
@@ -12,6 +26,7 @@ export default function LoginMain() {
             className="form-control"
             id="floatingInput"
             placeholder="아이디"
+            onChange={(e) => handleIdChange(e.target.value)}
           />
           <label htmlFor="floatingInput">아이디</label>
         </div>
@@ -21,12 +36,17 @@ export default function LoginMain() {
             className="form-control"
             id="floatingPassword"
             placeholder="비밀번호"
+            onChange={(e) => handlePwChange(e.target.value)}
           />
           <label htmlFor="floatingPassword">비밀번호</label>
         </div>
         <div className="buttonContainer">
           <div className="d-grid gap-2">
-            <button className="loginButton btn btn-info" type="button">
+            <button
+              className="loginButton btn btn-info"
+              type="button"
+              onClick={() => login()}
+            >
               로그인
             </button>
           </div>
