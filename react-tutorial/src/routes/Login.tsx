@@ -26,7 +26,9 @@ export default function Login() {
           handleLogin={handleLogin}
         />
       )}
-      {runLogin ? <RunLogin id={id} passwd={passwd} handleLogin={handleLogin} /> : <></>}
+      {runLogin ?? (
+        <RunLogin id={id} passwd={passwd} handleLogin={handleLogin} />
+      )}
     </>
   );
 }

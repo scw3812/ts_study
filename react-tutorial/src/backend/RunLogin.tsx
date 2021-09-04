@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 
 interface PropsType {
@@ -17,20 +18,24 @@ const GET_USER_INFO = gql`
 export default function RunLogin({ id, passwd, handleLogin }: PropsType) {
   const { loading, data } = useQuery(GET_USER_INFO, {
     variables: {
-      userId: id
+      userId: id,
+    },
+  });
+
+  useEffect(() => {
+    if (!loading) {
+      const result = data.personByUserId;
+      if (!result) {
+        alert("login failed");
+        handleLogin(false);
+      } else if (passwd !== result.password) {
+        alert("password failed");
+        handleLogin(false);
+      } else {
+        console.log("login success: ", result);
+      }
     }
   });
-  if (!loading) {
-    const result = data.personByUserId;
-    if (!result) {
-      console.log('login failed');
-      handleLogin(false);
-    } else if (passwd !== result.password) {
-      console.log('password failed');
-      handleLogin(false);
-    } else {
-      console.log('login success: ', result);
-    }
-  }
+
   return <></>;
 }
