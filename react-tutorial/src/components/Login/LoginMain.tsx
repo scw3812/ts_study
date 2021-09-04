@@ -3,19 +3,15 @@ import Footer from "../Footer";
 import "./LoginMain.css";
 
 interface PropsType {
-  id: string;
-  passwd: string;
   handleIdChange: (id: string) => void;
   handlePwChange: (passwd: string) => void;
-  login: () => void;
+  handleLogin: (flag: boolean) => void;
 }
 
 export default function LoginMain({
-  id,
-  passwd,
   handleIdChange,
   handlePwChange,
-  login
+  handleLogin
 }: PropsType) {
   return (
     <div className="loginMain fullsize">
@@ -45,7 +41,7 @@ export default function LoginMain({
             <button
               className="loginButton btn btn-info"
               type="button"
-              onClick={() => login()}
+              onClick={() => handleLogin(true)}
             >
               로그인
             </button>
