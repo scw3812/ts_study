@@ -5,6 +5,7 @@ interface PropsType {
   id: string;
   passwd: string;
   handleLogin: (flag: boolean) => void;
+  goMain: () => void;
 }
 
 const GET_USER_INFO = gql`
@@ -15,7 +16,12 @@ const GET_USER_INFO = gql`
   }
 `;
 
-export default function RunLogin({ id, passwd, handleLogin }: PropsType) {
+export default function RunLogin({
+  id,
+  passwd,
+  handleLogin,
+  goMain,
+}: PropsType) {
   const { loading, data } = useQuery(GET_USER_INFO, {
     variables: {
       userId: id,
@@ -33,6 +39,7 @@ export default function RunLogin({ id, passwd, handleLogin }: PropsType) {
         handleLogin(false);
       } else {
         console.log("login success: ", result);
+        goMain();
       }
     }
   });
