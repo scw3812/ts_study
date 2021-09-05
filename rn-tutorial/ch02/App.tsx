@@ -5,7 +5,10 @@ import {
   TouchableHighlight,
   Text,
   TextInput,
+  StyleSheet
 } from 'react-native'
+import { Colors } from 'react-native-paper'
+import Color from 'color'
 import Person from './src/screens/Person'
 import * as D from './src/data'
 
@@ -15,7 +18,7 @@ const App = () => {
   const [peopleNum, setPeopleNum] = useState(0)
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: Color(Colors.blue500).alpha(0.2).string() }]}>
       <ScrollView>
         <TextInput
           placeholder="input number"
@@ -29,7 +32,7 @@ const App = () => {
             setPeople(D.makeArray(peopleNum).map(D.createRandomPerson))
             setIsLoading(!isLoading)
           }}>
-          <Text>Click!</Text>
+          <Text style={[styles.text, { color: Colors.purple600, textAlign: 'center' }]}>Click!</Text>
         </TouchableHighlight>
         {!isLoading &&
           people.map(person => <Person key={person.id} person={person} />)}
@@ -37,5 +40,16 @@ const App = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 20,
+  },
+})
 
 export default App
