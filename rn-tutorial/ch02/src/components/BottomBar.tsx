@@ -19,6 +19,7 @@ export default BottomBar
 
 const styles = StyleSheet.create({
   view: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
