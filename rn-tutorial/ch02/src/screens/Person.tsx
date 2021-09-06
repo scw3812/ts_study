@@ -9,7 +9,7 @@ export type PersonProps = {
 
 const Person: FC<PersonProps> = ({ person }) => {
   return (
-    <View style={{ padding: 10 }}>
+    <View style={{ padding: 10, backgroundColor: 'white', margin: 10 }}>
       <Image source={{ uri: person.avatar }} style={{ width: 50, height: 50, borderRadius: 25, }}/>
       <Text>{JSON.stringify(person, null, 2)}</Text>
       <Button title="name" onPress={() => Alert.alert('name', person.name)} />
