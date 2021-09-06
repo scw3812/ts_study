@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/color": "^3.0.2",
     "@types/faker": "^5.5.8",
+    "@types/react-native-vector-icons": "^6.4.8",
     "color": "^4.0.1",
     "faker": "^5.5.3",
     "react": "17.0.2",
