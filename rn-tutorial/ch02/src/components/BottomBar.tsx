@@ -15,7 +15,7 @@ const BottomBar = () => {
   )
 }
 
-export default BottomBar
+export { BottomBar }
 
 const styles = StyleSheet.create({
   view: {

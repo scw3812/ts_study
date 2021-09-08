@@ -17,7 +17,7 @@ const Topbar = () => {
   )
 }
 
-export default Topbar
+export { Topbar }
 
 const styles = StyleSheet.create({
   view: {
