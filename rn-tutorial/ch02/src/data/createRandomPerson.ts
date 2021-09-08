@@ -7,7 +7,7 @@ export const createRandomPerson = (): IPerson => {
   return {
     id: F.randomId(),
     createdDate: F.randomDate(),
-    modifiedDate: F.randomDate(),
+    modifiedDate: new Date,
     name,
     email: F.randomEmail(),
     avatar: F.randomAvatarUri(name),
