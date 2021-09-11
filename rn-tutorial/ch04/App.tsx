@@ -1,62 +1,46 @@
-import React, { useMemo, useState } from 'react'
-import type { FC } from 'react'
-import { SafeAreaView, StyleSheet, FlatList, View, Text, ScrollView, Dimensions } from 'react-native'
+import React, { useMemo, useState, useCallback } from 'react'
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native'
 import { Colors } from 'react-native-paper'
-import PersonUsingValueState from './src/screens/PersonUsingValueState'
-import PersonUsingObjectState from './src/screens/PersonUsingObjectState'
-import PersonUsingPassingState from './src/screens/PersonUsingPassingState'
-import * as D from './src/data'
-import { Topbar } from './src/components'
-
-const { width } = Dimensions.get('window')
-
-interface PersonInformation {
-  title: string
-  Component: FC<any>
-}
-
-const personInfomations: PersonInformation[] = [
-  { title: 'PersonUsingValueState', Component: PersonUsingValueState },
-  { title: 'PersonUsingObjectState', Component: PersonUsingObjectState },
-  { title: 'PersonUsingPassingState', Component: PersonUsingPassingState },
-]
-
-const numberOfComponents = personInfomations.length
+import LifeCycle from './src/screens/LifeCycle'
+import Timer from './src/screens/Timer'
+import Interval from './src/screens/Interval'
+import Fetch from './src/screens/Fetch'
 
 const App = () => {
-  const people = useMemo(() => D.makeArray(1).map(D.createRandomPerson), [])
-  const [peopleState, setPeopleState] = useState(people)
-
-  const children = useMemo(
+  const selects = useMemo(() => ['lifeCycle', 'timer', 'interval', 'fetch'], [])
+  const [select, setSelect] = useState(selects[0])
+  const onPress = useCallback(text => () => setSelect(text), [])
+  const buttons = useMemo(
     () =>
-      personInfomations.map(({ title, Component }: PersonInformation) => (
-        <View style={styles.flex} key={title}>
-          <Text style={styles.text}>{title}</Text>
-          <FlatList
-            data={peopleState}
-            renderItem={({ item }) => <Component person={item} />}
-            keyExtractor={item => item.id}
-            ItemSeparatorComponent={() => <View style={styles.itemSeperator} />}
-          />
-        </View>
+      selects.map(text => (
+        <Text key={text} onPress={onPress(text)} style={styles.button}>
+          {text}
+        </Text>
       )),
-    [peopleState],
+    [selects, onPress],
   )
+
   return (
     <SafeAreaView style={styles.flex}>
-      <Topbar setPeopleState={setPeopleState} />
-      <ScrollView horizontal contentContainerStyle={styles.contentContainerStyle}>
-        {children}
-      </ScrollView>
+      <View style={styles.topBar}>{buttons}</View>
+      {select === 'lifeCycle' && <LifeCycle />}
+      {select === 'timer' && <Timer />}
+      {select === 'interval' && <Interval />}
+      {select === 'fetch' && <Fetch />}
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  contentContainerStyle: { width: width * numberOfComponents },
-  itemSeperator: { borderWidth: 1, borderColor: Colors.grey500 },
-  text: { fontSize: 24, textAlign: 'center' },
+  topBar: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 5,
+    justifyContent: 'space-between',
+    backgroundColor: Colors.lightBlue500,
+  },
+  button: { fontSize: 20, color: 'white' },
 })
 
 export default App
