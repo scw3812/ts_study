@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import type { FC } from 'react'
 import { View, Text, Alert, Image } from 'react-native'
 import moment from 'moment-with-locales-es6'
@@ -14,11 +14,11 @@ export type PersonProps = {
   person: D.IPerson
 }
 
-const avatarPressed = () => Alert.alert('avatar')
-const deletePressed = () => Alert.alert('delete')
-const countIconPressed = (name: string) => () => Alert.alert(`${name}`)
-
 const Person: FC<PersonProps> = ({ person }) => {
+  const avatarPressed = useCallback(() => Alert.alert('avatar'), [])
+  const deletePressed = useCallback(() => Alert.alert('delete'), [])
+  const countIconPressed = useCallback((name: string) => () => Alert.alert(`${name}`), [])
+
   return (
     <View style={styles.view}>
       <View style={styles.leftView}>
