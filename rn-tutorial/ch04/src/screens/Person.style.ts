@@ -5,10 +5,9 @@ import Color from 'color'
 export const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    width: '95%',
+    width: '100%',
     backgroundColor: Colors.lime100,
     padding: 5,
-    marginVertical: 10,
   },
   leftView: { padding: 5 },
   avatar: { borderColor: Color(Colors.blue500).lighten(0.5).string(), borderWidth: 2 },

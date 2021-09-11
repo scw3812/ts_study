@@ -1,18 +1,25 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import React, { useCallback } from 'react'
+import type { FC, Dispatch, SetStateAction } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as D from '../data'
 
-const name = D.randomName()
-const avatar = D.randomAvatarUri(name)
+export interface TopbarProps {
+  setPeopleState: Dispatch<SetStateAction<D.IPerson[]>>
+}
 
-const Topbar = () => {
+const Topbar: FC<TopbarProps> = ({ setPeopleState }) => {
+  const add = useCallback(() => setPeopleState(prevPeople => [D.createRandomPerson(), ...prevPeople]), [setPeopleState])
+  const deleteAll = useCallback(() => setPeopleState(() => []), [setPeopleState])
+
   return (
     <View style={styles.view}>
-      <Image style={styles.avatar} source={{ uri: avatar }} />
-      <Text style={[styles.text, styles.centerView]}>{name}</Text>
-      <Icon name="menu" size={24} color="white" />
+      <Text style={[styles.text]} onPress={add}>
+        add
+      </Text>
+      <Text style={[styles.text]} onPress={deleteAll}>
+        delete all
+      </Text>
     </View>
   )
 }
@@ -22,11 +29,9 @@ export { Topbar }
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 5,
-    backgroundColor: Colors.amber500,
+    backgroundColor: Colors.lightBlue700,
   },
-  text: { fontSize: 20, textAlign: 'center' },
-  avatar: { width: 40, height: 40, borderRadius: 20 },
-  centerView: { flex: 1 },
+  text: { fontSize: 20, color: 'white' },
 })
