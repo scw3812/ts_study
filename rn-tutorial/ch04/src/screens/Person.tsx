@@ -29,12 +29,7 @@ const Person: FC<PersonProps> = ({ person }) => {
         <Text style={styles.email}>{person.email}</Text>
         <View style={styles.dateView}>
           <Text style={styles.text}>{moment(person.createdDate).startOf('day').fromNow()}</Text>
-          <Icon
-            name="trash-can-outline"
-            size={26}
-            color={Colors.lightBlue500}
-            onPress={deletePressed}
-          />
+          <Icon name="trash-can-outline" size={26} color={Colors.lightBlue500} onPress={deletePressed} />
         </View>
         <Text style={[styles.text, styles.comments]} numberOfLines={3} ellipsizeMode="tail">
           {person.comments}
