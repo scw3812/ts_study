@@ -1,26 +1,15 @@
-import React, { useEffect, useLayoutEffect, useCallback } from 'react'
-import { StyleSheet, Text, View, Platform } from 'react-native'
-import type { LayoutChangeEvent } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from 'react-native-paper'
+import { useLayout } from '../hooks/useLayout'
 
 const LifeCycle = () => {
-  useEffect(() => {
-    console.log(Platform.OS, 'useEffect called')
-    return () => console.log(Platform.OS, 'useEffect finished')
-  }, [])
-  useLayoutEffect(() => {
-    console.log(Platform.OS, 'useLayoutEffect called')
-    return () => console.log(Platform.OS, 'useLayoutEffect finished')
-  }, [])
-  const onLayout = useCallback((e: LayoutChangeEvent) => {
-    const { layout } = e.nativeEvent
-    console.log(Platform.OS, 'onLayout called', layout)
-  }, [])
+  const [layout, setLayout] = useLayout()
 
-  console.log('render start')
   return (
-    <View style={styles.view} onLayout={onLayout}>
+    <View style={styles.view} onLayout={setLayout}>
       <Text style={styles.text}>LifeCycle</Text>
+      <Text>layout: {JSON.stringify(layout, null, 2)}</Text>
     </View>
   )
 }

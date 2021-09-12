@@ -1,14 +1,11 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, ActivityIndicator, Button } from 'react-native'
 import { Colors } from 'react-native-paper'
+import { useToggle, useTimeout } from '../hooks'
 
 const Timer = () => {
-  const [loading, setLoading] = useState(true)
-  const toggleLoading = useCallback(() => setLoading(flag => !flag), [])
-  useEffect(() => {
-    const id = setTimeout(() => setLoading(false), 3000)
-    return () => clearTimeout(id)
-  }, [loading])
+  const [loading, toggleLoading] = useToggle(true)
+  useTimeout(() => loading && toggleLoading(), 3000, [loading])
 
   return (
     <View style={styles.view}>
