@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import Home from './Home';
+import Input from './Input';
+import KeyboardAvoid from './KeyboardAvoid';
+import KeyboardAware from './KeyboardAware';
+import AutoFocus from './AutoFocus';
 
 const MainNavigator = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'life', title: 'LifeCycle', icon: 'page-layout-header-footer' },
-    { key: 'timer', title: 'Timer', icon: 'clock-time-four' },
-    { key: 'interval', title: 'Interval', icon: 'timeline' },
-    { key: 'fetch', title: 'Fetch', icon: 'history' },
+    { key: 'home', title: 'Home', icon: 'home' },
+    { key: 'input', title: 'Input', icon: 'apple-keyboard-caps' },
+    { key: 'avoid', title: 'KeyboardAvoid', icon: 'keyboard-variant' },
+    { key: 'aware', title: 'KeyboardAware', icon: 'keyboard-settings-outline' },
+    { key: 'auto', title: 'AutoFocus', icon: 'home-automation' },
   ]);
   const renderScene = BottomNavigation.SceneMap({
-    life: Home,
-    timer: Home,
-    interval: Home,
-    fetch: Home,
+    home: Home,
+    input: Input,
+    avoid: KeyboardAvoid,
+    aware: KeyboardAware,
+    auto: AutoFocus,
   });
 
   return (

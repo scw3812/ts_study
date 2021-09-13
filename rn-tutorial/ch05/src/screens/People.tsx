@@ -1,11 +1,11 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, Text, View, Switch, FlatList } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useToggleTheme } from '../contexts';
 import * as D from '../data';
 import Person from './Person';
 
-const Home = () => {
+const People = () => {
   const [people, setPeople] = useState([D.createRandomPerson()]);
   const theme = useTheme();
   const toggleTheme = useToggleTheme();
@@ -14,13 +14,6 @@ const Home = () => {
     [],
   );
   const removeAll = useCallback(() => setPeople((_) => []), []);
-
-  const flatListRef = useRef<FlatList | null>(null);
-  const onContenSizeChange = useCallback(
-    () => flatListRef.current?.scrollToEnd(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [flatListRef.current],
-  );
 
   return (
     <View style={[styles.view, { backgroundColor: theme.colors.surface }]}>
@@ -35,8 +28,6 @@ const Home = () => {
         <Switch value={theme.dark} onValueChange={toggleTheme} />
       </View>
       <FlatList
-        ref={flatListRef}
-        onContentSizeChange={onContenSizeChange}
         data={people}
         renderItem={({ item }) => <Person person={item} />}
         keyExtractor={(item) => item.id}
@@ -45,7 +36,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default People;
 
 const styles = StyleSheet.create({
   view: { flex: 1 },
