@@ -1,23 +1,11 @@
-import React, { forwardRef } from 'react';
-import type { ForwardRefRenderFunction, ComponentProps } from 'react';
-import { TextInput as RNTextInput } from 'react-native';
+import React from 'react';
+import type { FC, ComponentProps } from 'react';
+import { Text as RNText } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-export type TextInputProps = ComponentProps<typeof RNTextInput>;
+export type TextProps = ComponentProps<typeof RNText>;
 
-const _Text: ForwardRefRenderFunction<RNTextInput, TextInputProps> = (
-  { style, ...props },
-  ref,
-) => {
+export const Text: FC<TextProps> = ({ style, ...props }) => {
   const { colors } = useTheme();
-
-  return (
-    <RNTextInput
-      ref={ref}
-      style={[style, { color: colors.text, borderColor: colors.placeholder }]}
-      {...props}
-    />
-  );
+  return <RNText style={[style, { color: colors.text }]} {...props} />;
 };
-
-export const Text = forwardRef(_Text);

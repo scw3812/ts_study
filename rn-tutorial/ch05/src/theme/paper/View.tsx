@@ -1,23 +1,37 @@
-import React, { forwardRef } from 'react';
-import type { ForwardRefRenderFunction, ComponentProps } from 'react';
-import { TextInput as RNTextInput } from 'react-native';
+import React from 'react';
+import type { FC, ComponentProps } from 'react';
+import { View as RNView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-export type TextInputProps = ComponentProps<typeof RNTextInput>;
-
-const _View: ForwardRefRenderFunction<RNTextInput, TextInputProps> = (
-  { style, ...props },
-  ref,
-) => {
-  const { colors } = useTheme();
-
-  return (
-    <RNTextInput
-      ref={ref}
-      style={[style, { color: colors.text, borderColor: colors.placeholder }]}
-      {...props}
-    />
-  );
+export type ViewProps = ComponentProps<typeof RNView> & {
+  accent?: boolean;
+  notification?: boolean;
+  primary?: boolean;
+  surface?: boolean;
+  backgroud?: boolean;
 };
 
-export const View = forwardRef(_View);
+export const View: FC<ViewProps> = ({
+  style,
+  accent,
+  notification,
+  primary,
+  surface,
+  backgroud,
+  ...props
+}) => {
+  const { colors } = useTheme();
+  const backgroundColor = accent
+    ? colors.accent
+    : notification
+    ? colors.notification
+    : primary
+    ? colors.primary
+    : surface
+    ? colors.surface
+    : backgroud
+    ? colors.background
+    : 'transparent';
+
+  return <RNView style={[style, { backgroundColor }]} {...props} />;
+};
