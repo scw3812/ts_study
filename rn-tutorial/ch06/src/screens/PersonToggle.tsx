@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import type { FC } from 'react';
 import { View, Text, Alert, Image, Animated, Easing } from 'react-native';
 import moment from 'moment-with-locales-es6';
@@ -8,7 +8,12 @@ import * as D from '../data';
 import { styles } from './Person.style';
 import { Avatar } from '../components';
 import { Text as ThemeText, View as ThemeView } from '../theme/paper';
-import { useAnimatedValue, useMonitorAnimatedValue, useStyle } from '../hooks';
+import {
+  useToggle,
+  useAnimatedValue,
+  useMonitorAnimatedValue,
+  useStyle,
+} from '../hooks';
 
 moment.locale('ko');
 
@@ -17,20 +22,22 @@ export type PersonProps = {
   deletePressed: () => void;
 };
 
-const PersonMonitor: FC<PersonProps> = ({ person, deletePressed }) => {
+const PersonToggle: FC<PersonProps> = ({ person, deletePressed }) => {
   const animValue = useAnimatedValue(0);
   const realAnimValue = useMonitorAnimatedValue(animValue);
-  const [animationEnd, setAnimationEnd] = useState(false);
+  const [started, toggleStarted] = useToggle(false);
+
   const rightViewAnimStyle = useStyle({ opacity: animValue }, []);
   const avatarPressed = useCallback(
     () =>
       Animated.timing(animValue, {
         useNativeDriver: true,
-        toValue: 1,
+        toValue: started ? 0 : 1,
         duration: 2000,
-      }).start(() => setAnimationEnd((_) => true)),
+        easing: Easing.bounce,
+      }).start(toggleStarted),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [started],
   );
 
   return (
@@ -39,7 +46,7 @@ const PersonMonitor: FC<PersonProps> = ({ person, deletePressed }) => {
         realAnimValue: {realAnimValue}
       </ThemeText>
       <ThemeText style={{ fontSize: 20 }}>
-        animationEnd: {animationEnd ? 'true' : 'false'}
+        animationEnd: {started ? 'true' : 'false'}
       </ThemeText>
       <View style={styles.view}>
         <View style={styles.leftView}>
@@ -83,4 +90,4 @@ const PersonMonitor: FC<PersonProps> = ({ person, deletePressed }) => {
   );
 };
 
-export default PersonMonitor;
+export default PersonToggle;
