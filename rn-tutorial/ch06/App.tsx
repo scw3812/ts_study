@@ -18,7 +18,7 @@ const App = () => {
     () => setTheme((prevTheme) => (prevTheme.dark ? DefaultTheme : DarkTheme)),
     [],
   );
-  // git test
+
   return (
     <AppearanceProvider>
       <PaperProvider theme={theme}>
