@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
-import Basic from './Basic';
-import Monitor from './Monitor';
-import Toggle from './Toggle';
-import Interpolate from './Interpolate';
+import Transform from './Transform';
+import InsideLayout from './InsideLayout';
+import Arithmetic from './Arithmetic';
+import Carousel from './Carousel';
 
 const MainNavigator = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'basic', title: 'Basic', icon: 'alpha-b-box' },
-    { key: 'monitor', title: 'Monitor', icon: 'eye-circle' },
-    { key: 'toggle', title: 'Toggle', icon: 'file-eye' },
-    { key: 'interpolate', title: 'Interpolate', icon: 'bullseye' },
+    { key: 'transform', title: 'Transform', icon: 'alpha-b-box' },
+    { key: 'inside', title: 'InsideLayout', icon: 'eye-circle' },
+    { key: 'arith', title: 'Arithmetic', icon: 'file-eye' },
+    { key: 'carousel', title: 'Carousel', icon: 'bullseye' },
   ]);
   const renderScene = BottomNavigation.SceneMap({
-    basic: Basic,
-    monitor: Monitor,
-    toggle: Toggle,
-    interpolate: Interpolate,
+    transform: Transform,
+    inside: InsideLayout,
+    arith: Arithmetic,
+    carousel: Carousel,
   });
 
   return (
