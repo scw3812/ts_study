@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
-import Transform from './Transform';
-import InsideLayout from './InsideLayout';
-import Arithmetic from './Arithmetic';
-import Carousel from './Carousel';
+import Sequence from './Sequence';
+import Parallel from './Parallel';
+import Stagger from './Stagger';
+import EnterExit from './EnterExit';
 
 const MainNavigator = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'transform', title: 'Transform', icon: 'alpha-b-box' },
-    { key: 'inside', title: 'InsideLayout', icon: 'eye-circle' },
-    { key: 'arith', title: 'Arithmetic', icon: 'file-eye' },
-    { key: 'carousel', title: 'Carousel', icon: 'bullseye' },
+    { key: 'sequence', title: 'Sequence', icon: 'alpha-b-box' },
+    { key: 'parallel', title: 'Parallel', icon: 'eye-circle' },
+    { key: 'stagger', title: 'Stagger', icon: 'file-eye' },
+    { key: 'enter', title: 'EnterExit', icon: 'bullseye' },
   ]);
   const renderScene = BottomNavigation.SceneMap({
-    transform: Transform,
-    inside: InsideLayout,
-    arith: Arithmetic,
-    carousel: Carousel,
+    sequence: Sequence,
+    parallel: Parallel,
+    stagger: Stagger,
+    enter: EnterExit,
   });
 
   return (
