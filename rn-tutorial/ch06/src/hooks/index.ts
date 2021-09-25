@@ -4,3 +4,4 @@ export * from './useStyle';
 export * from './useToggle';
 export * from './useTransformStyle';
 export * from './useLayout';
+export * from './useAnimatedValues';
