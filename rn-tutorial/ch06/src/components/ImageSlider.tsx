@@ -26,8 +26,31 @@ export const ImageSlider: FC<ImageSliderProps> = ({
   showThumbnails,
 }) => {
   const flatListRef = useRef<FlatList | null>(null);
+  const selectedIndexAnimValue = useAnimatedValue(0);
+  const selectedIndex = useMonitorAnimatedValue(selectedIndexAnimValue);
+
+  const circleWidthAnimValue = useAnimatedValue(circleWidth);
+  const circleMarginRightAnimValue = useAnimatedValue(circleMarginRight);
+
+  const onScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (imageWidth === 0) {
+        return;
+      }
+      const { contentOffset } = event.nativeEvent;
+      const index = Math.round(contentOffset.x / imageWidth);
+      selectedIndexAnimValue.setValue(index);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [imageWidth],
+  );
+
   const selectImage = useCallback(
-    (index: number) => () => flatListRef.current?.scrollToIndex({ index }),
+    (index: number) => () => {
+      selectedIndexAnimValue.setValue(index);
+      flatListRef.current?.scrollToIndex({ index });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
   const circles = useMemo(
@@ -41,7 +64,13 @@ export const ImageSlider: FC<ImageSliderProps> = ({
       imageUrls.map((uri, index) => (
         <TouchableView
           key={index}
-          style={styles.thumbnail}
+          style={[
+            styles.thumbnail,
+            {
+              borderColor:
+                index === selectedIndex ? Colors.lightBlue900 : 'transparent',
+            },
+          ]}
           onPress={selectImage(index)}>
           <Image source={{ uri }} style={styles.thumbnailImage} />
         </TouchableView>
@@ -50,12 +79,20 @@ export const ImageSlider: FC<ImageSliderProps> = ({
     [],
   );
 
+  const translateX = useTransformStyle({
+    translateX: Animated.multiply(
+      selectedIndexAnimValue,
+      Animated.add(circleWidthAnimValue, circleMarginRightAnimValue),
+    ),
+  });
+
   return (
     <>
       <FlatList
         ref={flatListRef}
         horizontal
         pagingEnabled
+        onScroll={onScroll}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ width: imageUrls.length * imageWidth }}
         data={imageUrls}
@@ -70,7 +107,9 @@ export const ImageSlider: FC<ImageSliderProps> = ({
       <View style={[styles.iconBar, { justifyContent: 'center' }]}>
         <View style={{ flexDirection: 'row' }}>
           {circles}
-          <Animated.View style={[styles.circle, styles.selectedCircle]} />
+          <Animated.View
+            style={[styles.circle, styles.selectedCircle, translateX]}
+          />
         </View>
       </View>
       {showThumbnails && (
