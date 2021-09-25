@@ -59,9 +59,9 @@ const PersonStagger: FC<PersonProps> = ({ person, deletePressed }) => {
   );
 
   const avatarPressed = useCallback(() => {
-    Animated.stagger(delay, [...startAnimations, ...endAnimations]).start(
-      toggleStarted,
-    );
+    Animated.loop(
+      Animated.stagger(delay, [...startAnimations, ...endAnimations]),
+    ).start(toggleStarted);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started]);
 
