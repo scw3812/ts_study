@@ -76,7 +76,7 @@ export const ImageSlider: FC<ImageSliderProps> = ({
         </TouchableView>
       )),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [selectedIndex],
   );
 
   const translateX = useTransformStyle({
