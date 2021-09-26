@@ -8,7 +8,7 @@ export type ViewProps = ComponentProps<typeof RNView> & {
   notification?: boolean;
   primary?: boolean;
   surface?: boolean;
-  backgroud?: boolean;
+  background?: boolean;
 };
 
 export const View: FC<ViewProps> = ({
@@ -17,7 +17,7 @@ export const View: FC<ViewProps> = ({
   notification,
   primary,
   surface,
-  backgroud,
+  background,
   ...props
 }) => {
   const { colors } = useTheme();
@@ -29,7 +29,7 @@ export const View: FC<ViewProps> = ({
     ? colors.primary
     : surface
     ? colors.surface
-    : backgroud
+    : background
     ? colors.background
     : 'transparent';
 

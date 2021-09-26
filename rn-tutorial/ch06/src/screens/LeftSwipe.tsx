@@ -7,7 +7,7 @@ import {
   useScrollEnabled,
 } from '../contexts';
 import * as D from '../data';
-import Person from './Person';
+import Person from './PersonLeftSwipe';
 
 const People = () => {
   const [scrollEnabled] = useScrollEnabled();
