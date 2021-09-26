@@ -38,6 +38,7 @@ export const AutoFocusProvider: FC<AutoFocusProviderProps> = ({
   return (
     <AutoFocusContext.Provider value={value}>
       <KeyboardAwareScrollView
+        enableResetScrollToCoords={false}
         {...props}
         // eslint-disable-next-line react-native/no-inline-styles
         style={{ flex: 1, width: '100%' }}

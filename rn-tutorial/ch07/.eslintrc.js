@@ -3,5 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   rules: {
     'no-undef': 'off',
+    'no-shadow': 'off',
+    'react-native/no-inline-styles': 'off',
   },
 };
