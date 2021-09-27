@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, View, UnderlineText, TopBar } from '../theme/navigation';
 import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
 import * as D from '../data';
 import Person from './Person';
 
-const People = () => {
+const Home = () => {
+  const navigation = useNavigation();
+  const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
+  const goRight = useCallback(
+    () => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }),
+    [],
+  );
+
   const [scrollEnabled] = useScrollEnabled();
-  const [people, setPeople] = useState([D.createRandomPerson()]);
+  const [people, setPeople] = useState<D.IPerson[]>([]);
 
   const addPerson = useCallback(
     () => setPeople((people) => [D.createRandomPerson(), ...people]),
@@ -26,6 +34,14 @@ const People = () => {
     <SafeAreaView>
       <ScrollEnabledProvider>
         <View style={[styles.view]}>
+          <TopBar>
+            <UnderlineText onPress={goLeft} style={styles.text}>
+              go left
+            </UnderlineText>
+            <UnderlineText onPress={goRight} style={styles.text}>
+              go right
+            </UnderlineText>
+          </TopBar>
           <TopBar>
             <UnderlineText onPress={addPerson} style={styles.text}>
               add
@@ -48,7 +64,7 @@ const People = () => {
   );
 };
 
-export default People;
+export default Home;
 
 const styles = StyleSheet.create({
   view: { flex: 1 },

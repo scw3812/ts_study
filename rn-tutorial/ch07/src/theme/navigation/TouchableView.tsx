@@ -27,7 +27,6 @@ export const TouchableView: FC<TouchableViewProps> = ({
 
 const styles = StyleSheet.create({
   touchable: {
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
