@@ -1,88 +1,96 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-import { SafeAreaView, View, UnderlineText, TopBar } from '../theme/navigation';
-import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableView,
+  UnderlineText,
+} from '../theme';
+import { useAutoFocus, AutoFocusProvider } from '../contexts';
 import * as D from '../data';
-import Person from './Person';
-import { LeftRightNavigation } from '../components';
-import type { LeftRightNavigationMethods } from '../components';
-import type { StackParamList } from './HomeNavigator';
+import type { TabParamList } from './MainNavigator';
 
-type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+type SignUpNavigationProp = BottomTabNavigationProp<TabParamList, 'Login'>;
 
 const SignUp = () => {
-  const navigation = useNavigation<HomeNavigationProp>();
-  const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
-  const goRight = useCallback(
-    () => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }),
-    [],
+  const [person, setPerson] = useState(D.createRandomPerson());
+  const [password, setPassword] = useState(D.random(10000, 1000000).toString());
+  const [confirmPassword, setConfirmPassword] = useState(
+    D.random(10000, 1000000).toString(),
   );
+  const focus = useAutoFocus();
 
-  const [scrollEnabled] = useScrollEnabled();
-  const [people, setPeople] = useState<D.IPerson[]>([]);
-
-  const leftRef = useRef<LeftRightNavigationMethods | null>(null);
-  const addPerson = useCallback(
-    () => setPeople((people) => [D.createRandomPerson(), ...people]),
-    [],
-  );
-  const removeAllPersons = useCallback(() => {
-    setPeople((_) => []);
-    leftRef.current?.resetOffset();
-  }, []);
-  const deletePerson = useCallback(
-    (id: string) => () => {
-      setPeople((people) => people.filter((person) => person.id !== id));
-      leftRef.current?.resetOffset();
-      flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
-    },
-    [],
-  );
-
-  useEffect(() => D.makeArray(5).forEach(addPerson), []);
-
-  const flatListRef = useRef<FlatList | null>(null);
+  const navigation = useNavigation<SignUpNavigationProp>();
+  const goHomeNavigator = useCallback(() => {
+    if (password === confirmPassword) {
+      navigation.navigate('HomeNavigator');
+    } else {
+      Alert.alert('password is invalid');
+    }
+  }, [password, confirmPassword]);
+  const goLogin = useCallback(() => navigation.navigate('Login'), []);
 
   return (
     <SafeAreaView>
-      <ScrollEnabledProvider>
-        <View style={[styles.view]}>
-          <TopBar>
-            <UnderlineText onPress={goLeft} style={styles.text}>
-              go left
-            </UnderlineText>
-            <UnderlineText onPress={goRight} style={styles.text}>
-              go right
-            </UnderlineText>
-          </TopBar>
-          <TopBar>
-            <UnderlineText onPress={addPerson} style={styles.text}>
-              add
-            </UnderlineText>
-            <UnderlineText onPress={removeAllPersons} style={styles.text}>
-              remove all
-            </UnderlineText>
-          </TopBar>
-          <LeftRightNavigation
-            ref={leftRef}
-            distance={40}
-            flatListRef={flatListRef}
-            onLeftToRight={goLeft}
-            onRightToLeft={goRight}>
-            <FlatList
-              ref={flatListRef}
-              scrollEnabled={scrollEnabled}
-              data={people}
-              renderItem={({ item }) => (
-                <Person person={item} deletePressed={deletePerson(item.id)} />
-              )}
-              keyExtractor={(item) => item.id}
-            />
-          </LeftRightNavigation>
-        </View>
-      </ScrollEnabledProvider>
+      <View style={styles.view}>
+        <AutoFocusProvider contentContainerStyle={styles.keyboardAwareFocus}>
+          <View style={styles.textView}>
+            <Text style={styles.text}>email</Text>
+            <View border style={styles.textInputView}>
+              <TextInput
+                onFocus={focus}
+                style={styles.textInput}
+                value={person.email}
+                onChangeText={(email) =>
+                  setPerson((person) => ({ ...person, email }))
+                }
+                placeholder="enter your email"
+              />
+            </View>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text}>password</Text>
+            <View border style={styles.textInputView}>
+              <TextInput
+                secureTextEntry
+                onFocus={focus}
+                style={styles.textInput}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="enter your password"
+              />
+            </View>
+          </View>
+          <View style={styles.textView}>
+            <Text style={styles.text}>password confirm</Text>
+            <View border style={styles.textInputView}>
+              <TextInput
+                secureTextEntry
+                onFocus={focus}
+                style={styles.textInput}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="enter your password confirm"
+              />
+            </View>
+          </View>
+          <TouchableView
+            notification
+            style={styles.touchableView}
+            onPress={goHomeNavigator}>
+            <Text style={styles.text}>SignUp</Text>
+          </TouchableView>
+          <UnderlineText
+            style={[styles.text, { marginTop: 15 }]}
+            onPress={goLogin}>
+            Login
+          </UnderlineText>
+        </AutoFocusProvider>
+      </View>
     </SafeAreaView>
   );
 };
@@ -90,6 +98,23 @@ const SignUp = () => {
 export default SignUp;
 
 const styles = StyleSheet.create({
-  view: { flex: 1 },
-  text: { marginRight: 10, fontSize: 20 },
+  view: { flex: 1, justifyContent: 'space-between', alignItems: 'center' },
+  text: { fontSize: 20 },
+  keyboardAwareFocus: {
+    flex: 1,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textView: { width: '100%', padding: 5, marginBottom: 10 },
+  textInput: { fontSize: 24, padding: 10 },
+  textInputView: { marginTop: 5, borderRadius: 10 },
+  touchableView: {
+    flexDirection: 'row',
+    height: 50,
+    borderRadius: 10,
+    width: '90%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

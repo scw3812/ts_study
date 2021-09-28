@@ -8,6 +8,12 @@ import Login from './Login';
 import SignUp from './SignUp';
 import HomeNavigator from './HomeNavigator';
 
+export type TabParamList = {
+  Login: undefined;
+  SignUp: undefined;
+  HomeNavigator: undefined;
+};
+
 type TabBarIconProps = { focused: boolean; color: string; size: number };
 
 const icons: Record<string, string[]> = {
@@ -35,7 +41,7 @@ const screenOptions = ({
   };
 };
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 const MainNavigator = () => {
   return (
