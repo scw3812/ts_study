@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { CompositeNavigationProp } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import {
   SafeAreaView,
@@ -12,9 +14,13 @@ import {
 } from '../theme';
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
 import * as D from '../data';
-import type { TabParamList } from './MainNavigator';
+import type { StackParamList } from './HomeNavigator';
+import type { TabParamList, NavigationProp } from './MainNavigator';
 
-type SignUpNavigationProp = BottomTabNavigationProp<TabParamList, 'Login'>;
+type SignUpNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<TabParamList, 'Login'>,
+  StackNavigationProp<StackParamList>
+>;
 
 const SignUp = () => {
   const [person, setPerson] = useState(D.createRandomPerson());
@@ -24,10 +30,10 @@ const SignUp = () => {
   );
   const focus = useAutoFocus();
 
-  const navigation = useNavigation<SignUpNavigationProp>();
+  const navigation = useNavigation<NavigationProp<'Login'>>();
   const goHomeNavigator = useCallback(() => {
     if (password === confirmPassword) {
-      navigation.navigate('HomeNavigator');
+      navigation.navigate('Home');
     } else {
       Alert.alert('password is invalid');
     }

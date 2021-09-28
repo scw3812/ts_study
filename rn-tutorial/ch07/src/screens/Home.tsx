@@ -1,16 +1,29 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import { SafeAreaView, View, UnderlineText, TopBar } from '../theme/navigation';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import {
+  SafeAreaView,
+  View,
+  UnderlineText,
+  TopBar,
+  NavigationHeader,
+  MaterialCommunityIcon as Icon,
+} from '../theme';
 import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
 import * as D from '../data';
 import Person from './Person';
 import { LeftRightNavigation } from '../components';
 import type { LeftRightNavigationMethods } from '../components';
 import type { StackParamList } from './HomeNavigator';
+import type { TabParamList } from './MainNavigator';
 
-type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+type HomeNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<StackParamList, 'Home'>,
+  BottomTabNavigationProp<TabParamList>
+>;
 
 const Home = () => {
   const navigation = useNavigation<HomeNavigationProp>();
@@ -19,6 +32,7 @@ const Home = () => {
     () => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }),
     [],
   );
+  const logout = useCallback(() => navigation.navigate('Login'), []);
 
   const [scrollEnabled] = useScrollEnabled();
   const [people, setPeople] = useState<D.IPerson[]>([]);
@@ -49,6 +63,10 @@ const Home = () => {
     <SafeAreaView>
       <ScrollEnabledProvider>
         <View style={[styles.view]}>
+          <NavigationHeader
+            title="Home"
+            Right={() => <Icon name="logout" size={30} onPress={logout} />}
+          />
           <TopBar>
             <UnderlineText onPress={goLeft} style={styles.text}>
               go left

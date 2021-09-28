@@ -1,18 +1,38 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import type { RouteProp, ParamListBase } from '@react-navigation/native';
+import type { CompositeNavigationProp } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type {
+  RouteProp,
+  ParamListBase,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors } from 'react-native-paper';
 
 import Login from './Login';
 import SignUp from './SignUp';
 import HomeNavigator from './HomeNavigator';
+import type { StackParamList } from './HomeNavigator';
 
 export type TabParamList = {
   Login: undefined;
   SignUp: undefined;
-  HomeNavigator: undefined;
+  HomeNavigator: NavigatorScreenParams<StackParamList>;
 };
+
+export type NavigationProp<T extends 'Login' | 'SignUp' | 'HomeNavigator'> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<TabParamList, T>,
+    StackNavigationProp<StackParamList>
+  >;
+
+export type NestedNavigationProp<T extends 'Home' | 'HomeLeft' | 'HomeRight'> =
+  CompositeNavigationProp<
+    BottomTabNavigationProp<TabParamList>,
+    StackNavigationProp<StackParamList, T>
+  >;
 
 type TabBarIconProps = { focused: boolean; color: string; size: number };
 
