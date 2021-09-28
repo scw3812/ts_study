@@ -1,44 +1,55 @@
 import React, { useCallback } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   SafeAreaView,
   View,
   Text,
-  UnderlineText,
   TopBar,
-} from '../theme/navigation';
-import * as D from '../data';
+  NavigationHeader,
+  MaterialCommunityIcon as Icon,
+} from '../theme';
+import { LeftRightNavigation } from '../components';
 
 const HomeRight = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const goBack = useCallback(
     () => navigation.canGoBack() && navigation.goBack(),
     [],
   );
-  const goRight = useCallback(
-    () => navigation.navigate('HomeRight', { id: D.randomId() }),
-    [],
-  );
+  const goHome = useCallback(() => navigation.navigate('Home'), []);
 
-  const route = useRoute();
   return (
     <SafeAreaView>
       <View style={[styles.view]}>
+        <NavigationHeader
+          title="HomeRight"
+          Left={() => (
+            <Icon name="arrow-left-bold" size={50} onPress={goBack} />
+          )}
+          Right={() => (
+            <Icon
+              name="shield-airplane"
+              size={30}
+              onPress={() => Alert.alert('menu pressed')}
+            />
+          )}
+        />
         <TopBar>
-          <UnderlineText onPress={goBack} style={styles.text}>
+          <Text onPress={goBack} style={styles.text}>
             go back
-          </UnderlineText>
-          <UnderlineText
-            onPress={goRight}
-            style={[styles.text, { marginLeft: 10 }]}>
-            go right
-          </UnderlineText>
+          </Text>
+          <Text onPress={goHome} style={[styles.text, { marginLeft: 10 }]}>
+            go home
+          </Text>
         </TopBar>
-        <View style={styles.content}>
-          <Text style={styles.text}>HomeRight</Text>
-          <Text style={styles.text}>{JSON.stringify(route, null, 2)}</Text>
-        </View>
+        <LeftRightNavigation distance={40} onLeftToRight={goHome}>
+          <View style={styles.content}>
+            <Text style={styles.text}>HomeRight</Text>
+            <Text style={styles.text}>{JSON.stringify(route, null, 2)}</Text>
+          </View>
+        </LeftRightNavigation>
       </View>
     </SafeAreaView>
   );
