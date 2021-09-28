@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import {
   SafeAreaView,
   View,
@@ -9,9 +10,12 @@ import {
   MaterialCommunityIcon as Icon,
 } from '../theme';
 import { LeftRightNavigation } from '../components';
+import type { StackParamList } from './MainNavigator';
+
+type HomeLeftNavigationProp = StackNavigationProp<StackParamList, 'HomeLeft'>;
 
 const HomeLeft = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeLeftNavigationProp>();
   const goHome = useCallback(() => navigation.navigate('Home'), []);
 
   return (

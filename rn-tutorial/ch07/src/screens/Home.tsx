@@ -1,15 +1,19 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView, View, UnderlineText, TopBar } from '../theme/navigation';
 import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
 import * as D from '../data';
 import Person from './Person';
 import { LeftRightNavigation } from '../components';
 import type { LeftRightNavigationMethods } from '../components';
+import type { StackParamList } from './MainNavigator';
+
+type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
 const Home = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeNavigationProp>();
   const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
   const goRight = useCallback(
     () => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }),

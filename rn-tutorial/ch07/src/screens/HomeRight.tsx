@@ -10,9 +10,13 @@ import {
   MaterialCommunityIcon as Icon,
 } from '../theme';
 import { LeftRightNavigation } from '../components';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { StackParamList } from './MainNavigator';
+
+type HomeRightNavigationProp = StackNavigationProp<StackParamList, 'HomeRight'>;
 
 const HomeRight = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeRightNavigationProp>();
   const route = useRoute();
   const goBack = useCallback(
     () => navigation.canGoBack() && navigation.goBack(),

@@ -6,7 +6,16 @@ import HomeLeft from './HomeLeft';
 import HomeRight from './HomeRight';
 import { useNaviagtionHorizontalInterpolator } from '../hooks';
 
-const Stack = createStackNavigator();
+export type StackParamList = {
+  Home: undefined;
+  HomeLeft: undefined;
+  HomeRight: {
+    name: string;
+    age: number;
+  };
+};
+
+const Stack = createStackNavigator<StackParamList>();
 
 const MainNavigator = () => {
   const interpolator = useNaviagtionHorizontalInterpolator();
