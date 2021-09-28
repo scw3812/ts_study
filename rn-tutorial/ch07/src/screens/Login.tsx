@@ -12,7 +12,7 @@ import type { StackParamList } from './HomeNavigator';
 
 type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
 
-const Home = () => {
+const Login = () => {
   const navigation = useNavigation<HomeNavigationProp>();
   const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
   const goRight = useCallback(
@@ -87,7 +87,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
 
 const styles = StyleSheet.create({
   view: { flex: 1 },

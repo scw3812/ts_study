@@ -10,7 +10,7 @@ import {
   MaterialCommunityIcon as Icon,
 } from '../theme';
 import { LeftRightNavigation } from '../components';
-import type { StackParamList } from './MainNavigator';
+import type { StackParamList } from './HomeNavigator';
 
 type HomeLeftNavigationProp = StackNavigationProp<StackParamList, 'HomeLeft'>;
 

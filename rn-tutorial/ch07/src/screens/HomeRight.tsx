@@ -11,7 +11,7 @@ import {
 } from '../theme';
 import { LeftRightNavigation } from '../components';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { StackParamList } from './MainNavigator';
+import type { StackParamList } from './HomeNavigator';
 
 type HomeRightNavigationProp = StackNavigationProp<StackParamList, 'HomeRight'>;
 
